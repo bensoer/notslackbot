@@ -40,7 +40,8 @@ To use notslackbot you'll need to add data. notlsackbot API has only a few simpl
 only post to one file for configuring, and one other file for getting reactions
 
 ##index.php
-To do any configuring you'll be making your POST calls to the `index.php` file. All POST requests follow this body
+To do any configuring you'll be making your POST calls to the `index.php` file. It is recommended to use POSTman
+to configure this. All POST requests follow this body
 content functionality:
 ```json
 {
@@ -53,10 +54,20 @@ content functionality:
     }
 }
 ```
-The command is what changes what is done in each of your calls. The available commands are:
-* add - add a reaction by passing a request keyword and the valid response
-* delete - delete a reaction by passing the request and response value
+The `command` tag in the `head` section is the command value for what you want to do in this request. The available commands are:
+* add - adds a request and response trigger to the DB
+* delete - deletes a request and response trigger from the DB
 * listAll - list all of the request and response reactions stored in the DB
+
+###add
+To add a request and response set the `command` value to `add` and then pass a `request` with the trigger word and a `response` with
+the desired response in the `data` section
+###delete
+To delete a request and response set the `command` value to `delete` and then in the `data` object set the `request` and `response` values to the
+values of the request and response you are wanting to delete. Note you may need to use the listAll command to view all previously set requests and responses
+###listAll
+listAll is a helper command to view all set requests and responses. Simply set the `command` value to `listAll` and pass an empty `data` object in the
+POST and all the set values will be returned
 
 Additionaly you can add multiple reactions to the same request. Simply `add` a response with the same request value
 and a random value will be selected when you trigger a reaction
